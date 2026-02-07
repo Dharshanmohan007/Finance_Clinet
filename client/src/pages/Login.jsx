@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { User, Eye, EyeOff } from "lucide-react";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import logo from "../assets/logo.svg";
 import AutoCarousel from "../components/AutoCarousel";
+import toast from "react-hot-toast";
 // import grid from "../assets/Vector.svg";
 // import union from "../assets/Union.svg";
 
@@ -35,17 +36,14 @@ export default function Login() {
         { email, password }
       );
 
-      const { token, role, firstTimeLogin } = res.data;
+      const { token, role } = res.data;
       localStorage.setItem("token", token);
       toast.success("Login successful!");
 
-      if (role.toLowerCase() === "admin" || role.toLowerCase() === "staff") {
-        navigate("/admin");
-      } else if (role.toLowerCase() === "student") {
-        if (firstTimeLogin) navigate("/application");
-        else navigate("/dashboard");
+      if (role.toLowerCase() === "admin" ) {
+        navigate("/home");
       } else {
-        navigate("/");
+        navigate("/notfound");
       }
     } catch (err) {
       toast.error(err.response?.data?.message || "Login failed");
@@ -99,7 +97,7 @@ export default function Login() {
       {/* Left Column */}
       <div className=" md:w-1/2 flex items-center justify-center px-6 z-500">
         <div className=" max-w-md w-full space-y-6">
-          <img src={logo} alt="Logo" className="w-32 mx-auto mb-6" />
+          <img src={logo} alt="Logo" className="w-40 mx-auto mb-6" />
 
           {/* Titles */}
           {view === "login" && (
@@ -115,12 +113,12 @@ export default function Login() {
             </>
           )}
           {view === "forgot" && (
-            <h1 className="text-2xl font-bold text-gray-900 text-center">
+            <h1 className="text-2xl font-bold text-gray-900 text-center inter">
               Forgot Password
             </h1>
           )}
           {view === "reset" && (
-            <h1 className="text-2xl font-bold text-gray-900 text-center">
+            <h1 className="text-2xl font-bold text-gray-900 text-center inter">
               Reset Password
             </h1>
           )}
@@ -162,13 +160,13 @@ export default function Login() {
               <div className="flex justify-between items-center">
                 <div className="flex flex-row gap-2 items-center">
                   <input type="checkbox" className="w-4 h-4"/>
-                  <p>Remember Me</p>
+                  <p className="inter">Remember Me</p>
                 </div>
                 <div className="text-right">
                   <button
                     type="button"
                     onClick={() => setView("forgot")}
-                    className="text-sm text-[#0B56A4] cursor-pointer"
+                    className="text-sm text-[#0B56A4] cursor-pointer inter"
                   >
                     Forgot Password?
                   </button>
@@ -191,7 +189,7 @@ export default function Login() {
           {/* Forgot Password Form */}
           {view === "forgot" && (
             <form onSubmit={handleForgotPassword} className="space-y-4">
-              <p className="text-gray-600 text-center text-sm">
+              <p className="text-gray-600 text-center text-sm inter">
                 Enter your email to receive an OTP.
               </p>
               <input
@@ -206,14 +204,14 @@ export default function Login() {
                 <button
                   type="button"
                   onClick={() => setView("login")}
-                  className="w-1/2 py-2 rounded-lg bg-gray-300"
+                  className="w-1/2 py-2 rounded-lg bg-gray-300 inter"
                 >
                   Back
                 </button>
                 <button
                   type="submit"
                   disabled={forgotLoading}
-                  className={`w-1/2 py-2 rounded-lg text-white ${
+                  className={`w-1/2 py-2 rounded-lg text-white inter ${
                     forgotLoading
                       ? "bg-gray-400 cursor-not-allowed"
                       : "bg-[#0b56a4]"
@@ -259,14 +257,14 @@ export default function Login() {
                 <button
                   type="button"
                   onClick={() => setView("login")}
-                  className="w-1/2 py-2 rounded-lg bg-gray-300"
+                  className="w-1/2 py-2 rounded-lg bg-gray-300 inter"
                 >
                   Back
                 </button>
                 <button
                   type="submit"
                   disabled={resetLoading}
-                  className={`w-1/2 py-2 rounded-lg text-white ${
+                  className={`w-1/2 py-2 rounded-lg text-white inter ${
                     resetLoading
                       ? "bg-gray-400 cursor-not-allowed"
                       : "bg-[#0b56a4]"
