@@ -5,16 +5,14 @@ import Landing from './pages/Landing'
 // import Sidebar from './components/Sidebar'
 import Login from './pages/Login'
 import Home from './pages/home'
-import NotFound from './pages/NotFound'
-import Finance from './pages/finance'
-import Receipt from './pages/Receipt'
-// import Layout from './layout/MainLayout';
-import FeeBalance from './pages/FeeBalance'
+import ProtuctedRoutes from './utils/ProtuctedRoutes'
+// import NotFound from './pages/NotFound'
+// import Finance from './pages/finance'
+// import Receipt from './pages/Receipt'
+// import FeeBalance from './pages/FeeBalance'
 
 // import { ToastContainer } from 'react-toastify'
 import toast, { Toaster } from "react-hot-toast";
-import MainLayout from './layout/MainLayout'
-
 function App() {
 
   return (
@@ -35,14 +33,17 @@ function App() {
       {/* <Navbar/>
       <Sidebar/> */}
       <Routes>
-        <Route element={<MainLayout/>}/>
         <Route path='/landing' element={<Landing/>}/>
         <Route path='/' element={<Login/>}/>
-        <Route path='/home' element={<Home/>}/>
-        <Route path='/notfound' element={<NotFound/>}/>
+        <Route path='/home/*' element={
+          <ProtuctedRoutes>
+          <Home/>
+          </ProtuctedRoutes>}
+        />
+        {/* <Route path='/notfound' element={<NotFound/>}/>
         <Route path='/finance' element={<Finance/>}/>
         <Route path='/receipt' element={<Receipt/>}/>
-        <Route path='/feebalance' eleme={<FeeBalance/>}/>
+        <Route path='/feebalance' eleme={<FeeBalance/>}/> */}
       </Routes>
     </>
   )
